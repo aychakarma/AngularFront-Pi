@@ -1,0 +1,50 @@
+<ll-product-hero></ll-product-hero>
+<table class="table" *ngIf="(p | async)?.length">
+    <thead>
+      <tr>
+        <th scope="col">Nom du produit</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Catégorie de produit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prcmnds of p | async">
+        <td>{{ prcmnds.nomProduit }}</td>
+        <td>{{ prcmnds.prixProduit }}</td>
+        <td>{{ prcmnds.categorieProduit }}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7" class="text-end"><strong>Total : {{ totalPrix }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+
+
+       <div class="container">
+            <div class="row">
+            <div class="col-md-8 offset-md-2">
+           <!--      <h2 class="mb-4">Create Command</h2>
+                <form (ngSubmit)="createCommande()" #commandeForm="ngForm">
+                <div class="form-group">
+                    <label for="statusCommande">Status Commande</label>
+                    <select class="form-control" id="statusCommande" name="statusCommande" [(ngModel)]="commande.statusCommande" required>
+                    <option *ngFor="let status of statusCommande" [value]="status">{{ status }}</option>
+                    </select>
+                </div> -
+                <div class="form-group">
+                    <label for="statusPaiement">Status Paiement</label>
+                    <select class="form-control" id="statusPaiement" name="statusPaiement" [(ngModel)]="commande.statusPaiement" required>
+                    <option *ngFor="let status of statusPaiement" [value]="status">{{ status }}</option>
+                    </select>
+                    
+                
+                </div>
+                <button type="submit" class="btn btn-primary">Create Command</button>
+                </form> -->
+            </div>
+            </div>
+        </div>
+        
+ 

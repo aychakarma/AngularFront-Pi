@@ -1,0 +1,43 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th>Date Commande</th>
+        <th>Statut Commande</th>
+        <th>Statut Paiement</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Commands | async">
+        <td>{{ item.dateCommande | date : 'yyyy-MM-dd'}}</td>
+        <td>{{ item.statusCommande }}</td>
+        <td>{{ item.statusPaiement }}</td>
+        <td>
+          <button type="button" class="btn btn-danger mr-2" (click)="deleteProduct(item)">Delete</button>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(item)">Modifier</button> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+
+  <form (ngSubmit)="createCommande()" #commandeForm="ngForm">
+    <!--  <div class="form-group">
+         <label for="statusCommande">Status Commande</label>
+         <select class="form-control" id="statusCommande" name="statusCommande" [(ngModel)]="commande.statusCommande" required>
+         <option *ngFor="let status of statusCommande" [value]="status">{{ status }}</option>
+         </select>
+     </div> -->
+     <div class="form-group">
+         <label for="statusPaiement">Status Paiement</label>
+         <select class="form-control" id="statusPaiement" name="statusPaiement" [(ngModel)]="commande.statusPaiement" required>
+         <option *ngFor="let status of statusPaiement" [value]="status">{{ status }}</option>
+         </select>
+     </div>
+     <button type="submit" class="btn btn-primary">Create Command</button>
+     </form>
+<!--  </div>
+ </div>
+</div>
+-->

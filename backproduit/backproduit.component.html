@@ -1,0 +1,150 @@
+
+<tr>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2"  (click)="edit(newProduct)"  style="margin-left: 10% ;background-color: black; ">Add Your Product</button>
+    </tr>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="false">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">ajout Produit</h5>
+           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+           </button>
+         </div>
+         <div class="modal-body">
+   
+           <form (submit)="onAddProduit()">
+             <div class="form-group">
+               <label for="nomProduit">Nom produit:</label>
+               <input type="text" class="form-control" id="nomProduit" [(ngModel)]="newProduct.nomProduit" name="nomProduit" required>
+               <div *ngIf="!newProduct.nomProduit" class="text-danger">Ce champ est requis.</div>
+             </div>
+             <div class="form-group">
+               <label for="dateCreation">Date création:</label>
+               <input type="date" class="form-control" id="dateCreation" [(ngModel)]="newProduct.dataCreation" name="dateCreation" required>
+               <div *ngIf="!newProduct.dataCreation" class="text-danger">Ce champ est requis.</div>
+             </div>
+             <div class="form-group">
+               <label for="prixProduit">Prix produit:</label>
+               <input type="number" class="form-control" id="prixProduit" [(ngModel)]="newProduct.prixProduit" name="prixProduit" required>
+               <div *ngIf="!newProduct.prixProduit" class="text-danger">Ce champ est requis.</div>
+             </div>
+             <div class="form-group">
+               <label for="dateValidite">Date validité:</label>
+               <input type="date" class="form-control" id="dateValidite" [(ngModel)]="newProduct.dateValidite" name="dateValidite" required min="{{newProduct.dataCreation}}">
+               <div *ngIf="!newProduct.dateValidite" class="text-danger">Ce champ est requis.</div>
+               <div *ngIf="newProduct.dateValidite && newProduct.dateValidite < newProduct.dataCreation" class="text-danger">La date de validité doit être après la date de création.</div>
+             </div> 
+             <div class="form-group">
+               <label for="validite">Disponibilité:</label>
+               <input type="checkbox" class="form-control" id="validite" [(ngModel)]="newProduct.validite" name="validite">
+             </div>
+             <div class="form-group">
+               <label for="categorieProduit">Catégorie produit:</label>
+               <select class="form-control" id="categorieProduit" [(ngModel)]="newProduct.categorieProduit" name="categorieProduit" required>
+                 <option *ngFor="let categorie of categories">{{ categorie }}</option>
+               </select>
+               <div *ngIf="!newProduct.categorieProduit" class="text-danger">Ce champ est requis.</div>
+             </div>
+   
+               <div class="form-group">
+                 <label for="image">Image:</label>
+                 <input type="file" class="form-control-file" id="image" (change)="onFileSelected($event)">
+               </div>
+             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Ajouter un produit</button>
+           </form>
+           
+             
+         </div>
+         
+   </div>
+   </div>
+
+
+   <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Date de création</th>
+        <th>Date de validité</th>
+        <th>Disponibilité</th>
+        <th>Catégorie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Produits | async">
+        <td>{{ item.nomProduit }}</td>
+        <td>{{ item.prixProduit }}</td>
+        <td>{{ item.dataCreation | date : 'yyyy-MM-dd'}}</td>
+        <td>{{ item.dateValidite | date : 'yyyy-MM-dd'}}</td>
+        <td>{{ item.validite }}</td>
+        <td>{{ item.categorieProduit }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+     
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modifier Produit</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div >
+        <div class="modal-body">
+          <form #updateForm="ngForm" (ngSubmit)="OnupdateProduit()" >            
+            <div class="form-group">
+              <label for="nomProduit">Nom produit:</label>
+              <input type="text" class="form-control" id="nomProduit" [(ngModel)]="ProductToUpdate.nomProduit" name="nomProduit" required>
+              <div *ngIf="!newProduct.nomProduit" class="text-danger">Ce champ est requis.</div>
+            </div>
+            <div class="form-group">
+              <label for="dateCreation">Date création:</label>
+              <input type="date" class="form-control" id="dateCreation" [(ngModel)]="ProductToUpdate.dataCreation" name="dateCreation" required>
+              <div *ngIf="!newProduct.dataCreation" class="text-danger">Ce champ est requis.</div>
+            </div>
+            <div class="form-group">
+              <label for="prixProduit">Prix produit:</label>
+              <input type="number" class="form-control" id="prixProduit" [(ngModel)]="ProductToUpdate.prixProduit" name="prixProduit" required>
+              <div *ngIf="!newProduct.prixProduit" class="text-danger">Ce champ est requis.</div>
+            </div>
+            <div class="form-group">
+              <label for="dateValidite">Date validité:</label>
+              <input type="date" class="form-control" id="dateValidite" [(ngModel)]="ProductToUpdate.dateValidite" name="dateValidite" required min="{{newProduct.dataCreation}}">
+              <div *ngIf="!newProduct.dateValidite" class="text-danger">Ce champ est requis.</div>
+              <div *ngIf="newProduct.dateValidite && newProduct.dateValidite < ProductToUpdate.dataCreation" class="text-danger">La date de validité doit être après la date de création.</div>
+            </div> 
+            <div class="form-group">
+              <label for="validite">Disponibilité:</label>
+              <input type="checkbox" class="form-control" id="validite" [(ngModel)]="ProductToUpdate.validite" name="validite">
+            </div>
+            <div class="form-group">
+              <label for="categorieProduit">Catégorie produit:</label>
+              <select class="form-control" id="categorieProduit" [(ngModel)]="ProductToUpdate.categorieProduit" name="categorieProduit" required>
+                <option *ngFor="let categorie of categories">{{ categorie }}</option>
+              </select>
+              <div *ngIf="!ProductToUpdate.categorieProduit" class="text-danger">Ce champ est requis.</div>
+
+              <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" class="form-control-file" id="image" [(ngModel)]="ProductToUpdate.image">
+              </div>
+
+
+            </div>   <input type="submit" value="Update" class="btn btn-primary w-100" data-bs-dismiss="modal">             >
+          
+         
+          
+        </form> 
+        
+        </div>
+        
+</div>
+</div>
+
+
+
+   

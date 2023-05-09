@@ -1,0 +1,143 @@
+<ll-header></ll-header>
+<ll-product-hero></ll-product-hero>
+<form (ngSubmit)="onSearchAndFilterSubmit(searchForm.value)" #searchForm="ngForm" class="row g-3">
+
+  <div class="col-md-4">
+    <label for="nomProduit" class="form-label">Nom Produit</label>
+    <input type="text" class="form-control" id="nomProduit" name="nomProduit" [(ngModel)]="newProduct.nomProduit">
+  </div>
+
+  <div class="col-md-4">
+    <label for="prixProduit" class="form-label">Prix Produit</label>
+    <div class="input-group">
+      <span class="input-group-text">$</span>
+      <input type="number" class="form-control" id="prixProduit" name="prixProduit" [(ngModel)]="newProduct.prixProduit">
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <label for="dateCreation" class="form-label">Date Creation</label>
+    <input type="date" class="form-control" id="dateCreation" name="dateCreation" [(ngModel)]="newProduct.dataCreation">
+  </div>
+
+  <div class="col-md-4">
+    <label for="dateValidite" class="form-label">Date Validite</label>
+    <input type="date" class="form-control" id="dateValidite" name="dateValidite" [(ngModel)]="newProduct.dateValidite">
+  </div>
+
+  <div class="col-md-4">
+    <label for="categorieProduit">Catégorie produit:</label>
+    <select class="form-select" id="categorieProduit" [(ngModel)]="newProduct.categorieProduit" name="categorieProduit">
+      <option value="">Choisir une catégorie</option>
+      <option *ngFor="let categorie of categories">{{ categorie }}</option>
+    </select>
+  </div>
+
+  <div class="col-md-12">
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+
+</form>
+
+
+<!-- <table class="table" *ngIf="(Produits | async)?.length">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">nomProduit>
+        <th scope="col">prix</th>
+        <th scope="col">Datecreation</th>
+        <th scope="col">DateValidite</th>
+        <th scope="col">Validite</th>
+        <th scope="col">categorieProduit</th>
+
+        <th scope="col" style="padding-left: 10%;">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of Produits |async ">
+        <th scope="row">{{item.idproduit }}</th>
+        <td>{{ item.nomProduit }}</td>
+        <td>{{ item.prixProduit }}</td>
+        <td>{{ item.dataCreation | date : 'yyyy-MM-dd'}}</td>
+        <td>{{ item.dateValidite | date : 'yyyy-MM-dd'}}</td>
+        <td>{{ item.validite}}</td>
+        <td>{{ item.categorieProduit}}</td>
+        <td> <input type="number" class="form-control" min="1" [(ngModel)]="quantity"> 
+        </td>
+        <div class="input-group">
+            <button class="btn btn-primary" (click)="addProduitToCommande(commandeid, item.idproduit, quantity)">Add to cart</button>
+            
+            </div>
+    </tr>
+    </tbody>
+</table> -->
+
+<div *ngIf="(Produits | async)?.length" class="d-flex flex-wrap">
+    <div class="card m-2" *ngFor="let item of Produits | async">
+      <div class="card-body" style="margin-right: 20px;">
+        <img src="{{ item.image }}" alt="Product image" style="max-width: 100%; max-height: 100%;">
+        <h5 class="card-title">{{ item.nomProduit }}</h5>
+        <p class="card-text">Prix: {{ item.prixProduit }}</p>
+        <p class="card-text">Date de création: {{ item.dataCreation | date : 'yyyy-MM-dd'}}</p>
+        <p class="card-text">Date de validité: {{ item.dateValidite | date : 'yyyy-MM-dd'}}</p>
+        <p class="card-text">Disponibilité: {{ item.validite }}</p>
+        <p class="card-text">Catégorie: {{ item.categorieProduit }}</p>
+        <p><input type="number" class="form-control" min="1" [(ngModel)]="quantity"> </p>
+       
+      </div>
+      <div class="card-footer">
+        <div class="d-flex">
+            <button class="btn btn-primary" (click)="addProduitToCommande(commandeid, item.idproduit, quantity)">Add to cart</button>
+        </div>
+      </div>
+
+</div>            
+  </div>
+
+
+
+
+    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3"  (click)="edit(newCommand)"  style="margin-left: 10%; ">ajouter</button>
+ <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-bs-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">ajout du command</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            </button>   
+          </div>
+          <div class="modal-body">
+
+            
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-8 offset-md-2">
+    
+
+ -->    
+ <br>
+ <br>
+        <form (ngSubmit)="createCommande()" #commandeForm="ngForm">
+       <!--  <div class="form-group">
+            <label for="statusCommande">Status Commande</label>
+            <select class="form-control" id="statusCommande" name="statusCommande" [(ngModel)]="commande.statusCommande" required>
+            <option *ngFor="let status of statusCommande" [value]="status">{{ status }}</option>
+            </select>
+        </div> -->
+        <div class="form-group">
+            <label for="statusPaiement">Status Paiement</label>
+            <select class="form-control" id="statusPaiement" name="statusPaiement" [(ngModel)]="commande.statusPaiement" required>
+            <option *ngFor="let status of statusPaiement" [value]="status">{{ status }}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Command</button>
+        </form>
+   <!--  </div>
+    </div>
+</div>
+ -->
+
+ 
