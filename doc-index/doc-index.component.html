@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="form-wrapper">
+    <button class="btn btn-success" *ngIf="showButton" (click)="showForm = true">Transform your products here</button>
+
+    <form class="form form-background"  (submit)="onSubmit(form)" #form="ngForm" *ngIf="showForm" class="form">
+      <div class="form-group">
+        <label for="typePesticide">Pesticide type*</label>
+        <select type="text" id="typePesticide" name="typePesticide" ngModel required (change)="onSelectedSaisonChange($event)"class="form-control">
+          <option value=" "disabled selected>  </option>
+          <option *ngFor="let saison of typePesticide" placeholder="Choisir type pesticide"  [value]="saison">{{saison}}</option>
+        </select>
+        <div class="error-message" *ngIf="form.controls['typePesticide'].invalid && (form.controls['typePesticide'].dirty || form.controls['typePesticide'].touched)">
+          Please enter the type of pesticide.
+       
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="choixEquipe">
+          Team choice*</label>
+        <div class="radio-buttons">
+          <input type="radio" id="oui" name="choixEquipe" [(ngModel)]="choixEquipe" [value]="true" required>
+          <label class="radio-label" for="oui">Oui</label>
+          <input type="radio" id="non" name="choixEquipe" [(ngModel)]="choixEquipe" [value]="false" required>
+          <label class="radio-label" for="non">Non</label>
+        </div>
+        <div class="error-message" *ngIf="form.controls['choixEquipe'].invalid && (form.controls['choixEquipe'].dirty || form.controls['choixEquipe'].touched)">
+          Please select a team choice.
+        </div>
+     
+      
+     
+      
+      
+      </div>
+      <div class="form-group">
+        <label for="dateLivraisonPesticide">
+          Delivery date*</label>
+        <input type="date" id="dateLivraisonPesticide" name="dateLivraisonPesticide" ngModel required class="form-control">
+        <div class="error-message" placeholder="Date livraison"*ngIf="form.controls['dateLivraisonPesticide'].invalid && (form.controls['dateLivraisonPesticide'].dirty || form.controls['dateLivraisonPesticide'].touched)">
+          Please enter the delivery date.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="idUser">Utilisateur:</label>
+        <input type="text" id="idUser" name="idUser" ngModel required class="form-control">
+        <div class="error-message" *ngIf="form.controls['idUser'].invalid && (form.controls['idUser'].dirty || form.controls['idUser'].touched)">
+          Veuillez saisir l'id de l'utilisateur.
+        </div>
+       
+      </div>
+      <div class="card flex flex-wrap justify-content-center gap-2">
+  
+        <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Confirm</button>
+        <button class="btn btn-secondary" (click)="closeForm()">Cancel</button>
+      </div>
+     
+ 
+      <div class="popup" *ngIf="form.invalid && form.touched">
+        <p>
+          Please fill in all mandatory fields.</p>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
