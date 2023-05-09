@@ -1,0 +1,432 @@
+/* Style de la table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+}
+
+tbody tr:hover {
+  background-color: rgba(0,0,0,.075);
+}
+
+/* Style des boutons */
+button {
+  margin: 0 0.25rem;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+/* Style du formulaire */
+form {
+  margin-top: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+button[type="submit"] {
+  margin-top: 0 0.25rem;
+}
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+h3{
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+  position: relative;
+}
+
+h3::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background-color: #333;
+  box-shadow: 0px 0px 5px #333;
+  border-radius: 2px;
+}
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  color: #333;
+}
+
+h2:before {
+  content: attr(data-text);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  color: #fff;
+  z-index: -1;
+  text-shadow: -1px -1px 0 #000;
+  transform: rotateY(0deg) skewY(4deg);
+}
+
+h2:after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  text-shadow: -1px -1px 0 #3c3c3c, 1px -1px 0 #3c3c3c, -1px 1px 0 #3c3c3c, 1px 1px 0 #3c3c3c;
+  transform: scale(1.05, 1.15) rotateY(0deg) skewY(-4deg);
+}
+
+h2:hover:before {
+  transform: rotateY(20deg) skewY(4deg);
+}
+
+h2:hover:after {
+  transform: scale(1.1, 1.25) rotateY(-20deg) skewY(-4deg);
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Please ❤ this if you like it! 😊 */
+
+//SCSS Variables:
+$bg-color: #f2f6f9;
+$active-color: #25be64;
+$inactive-color: #dadde4;
+$new-color: #febf02;
+$text-color: #141a4e;
+$table-bg-color: #fefefe;
+$table-head-bg-color: #e1e8f2;
+$table-border-color: #edeef2;
+$hover-bg-color: #fb4f83;
+$hover-text-color: #ffffff;
+
+//Responsive Breakpoint SCSS Mixin:
+
+//xxs
+@mixin mobile-xxs {
+	@media (max-width: 400px) {
+		@content;
+	}
+}
+//min-sm
+@mixin min-tablet {
+	@media (min-width: 768px) {
+		@content;
+	}
+}
+//md
+@mixin desktop {
+	@media (max-width: 991px) {
+		@content;
+	}
+}
+//sm to md
+@mixin tablet-to-desktop {
+	@media (min-width: 768px) and (max-width: 991px) {
+		@content;
+	}
+}
+
+/* Googles Font Link */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* Reset Style */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 10px;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	font-family: "Poppins", sans-serif;
+	color: $text-color;
+	background-color: $bg-color;
+	font-size: 1.6rem;
+}
+
+/* Page Wrapper/Container Style */
+.container {
+	width: 100%;
+	max-width: 1140px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+
+/* Responsive Table Style */
+.responsive-table {
+	background-color: $table-bg-color;
+	border-collapse: collapse;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.02);
+	width: 100%;
+	margin: 2rem 0;
+	overflow: hidden;
+	&__row {
+		display: grid;
+		border-bottom: 1px solid $table-border-color;
+		padding: 0 1.5rem;
+		@include min-tablet {
+			grid-template-columns: 2fr 1fr 2fr 2fr 1fr;
+		}
+		@include tablet-to-desktop {
+			grid-template-columns: 1fr 2fr 1fr;
+		}
+		th,
+		td {
+			padding: 1rem;
+		}
+	}
+	&__head {
+		background-color: $table-head-bg-color;
+		@include desktop {
+			display: none;
+		}
+		&__title {
+			display: flex;
+			align-items: center;
+			font-weight: 500;
+			text-transform: capitalize;
+		}
+	}
+	&__body {
+		.responsive-table__row {
+			transition: 0.1s linear;
+			transition-property: color, background;
+			&:last-child {
+				border-bottom: none;
+			}
+			&:hover {
+				color: $hover-text-color;
+				background-color: $hover-bg-color;
+			}
+		}
+		&__text {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			&::before {
+				margin-right: 1rem;
+				font-weight: 600;
+				text-transform: capitalize;
+			}
+			@include desktop {
+				&::before {
+					content: attr(data-title) " :";
+				}
+			}
+			@include mobile-xxs {
+				&::before {
+					width: 100%;
+					margin-bottom: 1rem;
+				}
+			}
+			&--name {
+				font-weight: 600;
+				@include min-tablet {
+					&::before {
+						display: none;
+					}
+				}
+				@include tablet-to-desktop {
+					grid-column: 1 / 2;
+					flex-direction: column;
+				}
+			}
+			&--status,
+			&--types,
+			&--update {
+				@include tablet-to-desktop {
+					grid-column: 2/ 3;
+				}
+			}
+			&--country {
+				@include tablet-to-desktop {
+					grid-column: 3/ -1;
+				}
+			}
+			&--name,
+			&--country {
+				@include tablet-to-desktop {
+					grid-row: 2;
+				}
+			}
+		}
+	}
+}
+
+/* SVG Up Arrow Style */
+.up-arrow {
+	height: 100%;
+	max-height: 1.8rem;
+	margin-left: 1rem;
+}
+
+/* SVG User Icon Style */
+.user-icon {
+	width: 100%;
+	max-width: 4rem;
+	height: auto;
+	margin-right: 1rem;
+}
+
+/* Status Indicator Style */
+.status-indicator {
+	display: inline-block;
+	width: 1.8rem;
+	height: 1.8rem;
+	border-radius: 50%;
+	background: #222222;
+	margin-right: 0.5rem;
+	&--active {
+		background: $active-color;
+	}
+	&--inactive {
+		background: $inactive-color;
+	}
+	&--new {
+		background: $new-color;
+	}
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #5cb85c;
+  outline: 0;
+  box-shadow: 0 0
+}

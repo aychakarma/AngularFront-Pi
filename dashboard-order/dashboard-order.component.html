@@ -1,0 +1,44 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Users</th>
+      <th>Names of Associated Teams</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stat of testStats">
+      <td>{{ stat.username }}</td>
+      <td>
+        <div *ngIf="stat.nomEquipe" style="display: flex; flex-direction: column;">
+          <div *ngFor="let nomEquipe of stat.nomEquipe.split(',')">{{ nomEquipe }}</div>
+        </div>
+      </td>
+      <td *ngIf="stat.hasOwnProperty('username')">
+        <button class="btn-details" (click)="showDetails(stat.username)">Details</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<img src="https://picsum.photos/id/1039/200/200">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
