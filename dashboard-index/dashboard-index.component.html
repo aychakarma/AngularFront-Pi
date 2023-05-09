@@ -1,0 +1,151 @@
+
+<br> <br>
+<div class="container">
+  <h2>Reclamation List</h2>
+  <button type="button" class="btn btn-success" (click)="getByArchivedTrue()">Archived</button>
+  <button type="button" class="btn btn-success" (click)="getReclamations()">Reset</button>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>id Claim</th>
+      <th>Description</th>
+      <th>Claim Date</th>
+      <th>Resolve Date</th>
+      <th>Claim Type</th>
+      <th>Claim Status</th>
+      <th>Archived</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let rec of listRec">
+      <td>{{rec.idReclamation}}</td>
+      <td>{{rec.description}}</td>
+      <td>{{rec.dateRec | date: 'yyyy-MM-dd'}}</td>
+      <td>{{rec.datResolution | date: 'yyyy-MM-dd'}}</td>
+      <td>{{rec.typeRec}}</td>
+      <td>
+        <div [ngClass]="{
+                'bg-green-500 text-green-500': rec?.statusRec === 'resolu',
+                'bg-red-500 text-red-500': rec?.statusRec === 'nonResolu',
+                'bg-yellow-500 text-yellow-900': rec?.statusRec === 'enCours',
+                'bg-primary text-primary': rec?.statusRec === 'INITIALE'
+                }"
+             class="text-[12px] bg-opacity-20 rounded-full px-3 inline-block font-bold py-[3px]"
+        >
+          {{ rec?.statusRec | titlecase }}
+        </div>
+      </td>
+
+      <td>
+        <div [ngClass]="{
+                'bg-green-500 text-green-500': rec?.archived === true,
+                'bg-red-500 text-red-500': rec?.archived === false,
+                }"
+             class="text-[12px] bg-opacity-20 rounded-full px-3 inline-block font-bold py-[3px]"
+        >
+          {{rec.archived }}
+        </div>
+      </td>
+      <td>
+        <button (click)="openDialog(template,rec)" class="btn btn-info">Update</button>
+
+        <ng-template #template>
+          <h1>     Update Claim</h1>
+          <br>
+          <br>
+          <mat-dialog-content style="width: 750px">
+
+            <div class="col-md-8" style="margin-left: 15%">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <form class="example-form-">
+                      <mat-form-field class="example-full-width" style="border-radius: 28px">
+                        <mat-label>Description</mat-label>
+                        <input mdInput  matInput [formControl]="descFormControl"  [(ngModel)]="reclamation.description" name="desc2"
+                               placeholder="Enter Description" >
+                        <mat-error *ngIf="descFormControl.hasError('required')">
+                          Description is <strong>required</strong>
+                        </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker3" [(ngModel)]="reclamation.dateRec" name="date3">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Date Resolution</mat-label>
+                        <input matInput [matDatepicker]="picker2" [(ngModel)]="reclamation.datResolution" name="date2">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Claim Status</mat-label>
+                        <mat-select [(ngModel)]="reclamation.statusRec" name="type4">
+                          <mat-option value="INITIALE">Initiale</mat-option>
+                          <mat-option value="enCours">En Cours</mat-option>
+                          <mat-option value="resolu">Resolu</mat-option>
+                          <mat-option value="nonResolu">Non Resolu</mat-option>
+                        </mat-select>
+
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Choose claim type</mat-label>
+                        <mat-select [(ngModel)]="reclamation.typeRec" name="type2">
+                          <mat-option value="produit">Produit</mat-option>
+                          <mat-option value="livraison">Livraison</mat-option>
+                          <mat-option value="equipe">Equipe</mat-option>
+                        </mat-select>
+
+                      </mat-form-field>
+                      <button (click)="updaterec(rec.idReclamation)" class="btn btn-info">Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-dialog-content>
+        </ng-template>
+        <button (click)="deleteReclamation(rec.idReclamation)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<div>
+<div id="Barchart" >
+  <apx-chart
+    [series]="chartOptionsBar.series"
+    [chart]="chartOptionsBar.chart"
+    [dataLabels]="chartOptionsBar.dataLabels"
+    [plotOptions]="chartOptionsBar.plotOptions"
+    [yaxis]="chartOptionsBar.yaxis"
+    [xaxis]="chartOptionsBar.xaxis"
+    [legend]="chartOptionsBar.legend"
+    [colors]="chartOptionsBar.colors"
+    [grid]="chartOptionsBar.grid"
+  ></apx-chart>
+
+
+  <div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [labels]="chartOptions.labels"
+      [responsive]="chartOptions.responsive"
+    ></apx-chart>
+  </div>
+
+</div>
+</div>

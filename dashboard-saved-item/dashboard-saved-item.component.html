@@ -1,0 +1,139 @@
+<div class="container">
+  <h2 >List of Teams</h2> <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name Team</th>
+        <th>Phone number</th>
+        <th>Number of teams</th>
+        <th>Area available</th>
+        <th>Email</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Speciality</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipe of equipes" (click)="equipeSelectionnee = equipe">
+        <td>{{equipe.nomEquipe}}</td>
+        <td>{{equipe.numTel}}</td>
+        <td>{{equipe.nbEquipe}}</td>
+        <td>{{equipe.zone_dispo}}</td>
+        <td>{{equipe.email}}</td>
+        <td>{{ equipe.dateDebut | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ equipe.dateFin| date: 'yyyy-MM-dd' }}</td>
+        <td>{{equipe.sepcialite}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="afficherModifierFormulaire = true; equipeSelectionnee = equipe">
+          <i class="far fa-edit"></i> <!-- icône de modification -->
+								<span class="sr-only">Modify</span>
+								<img src="https://cdn-icons-png.flaticon.com/512/483/483223.png " width="16" height="16">
+              </button>
+
+          <button class="btn btn-danger" (click)="deleteEquipe(equipe.idEquipe)">
+          <i class="fas fa-times"></i> <!-- icône de suppression -->
+								<span class="sr-only">Delete</span>
+								<img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" width="16" height="16">
+              </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-success" (click)="afficherFormulaire = true">Add Team</button>
+  
+  <div *ngIf="afficherFormulaire">
+    <h2>Add Team</h2>
+    <form #ajouterEquipeForm="ngForm" (submit)="addEquipe(ajouterEquipeForm)">
+      <div>
+        <label for="nomEquipe">Name Team</label>
+        <input type="text" id="nomEquipe" name="nomEquipe" [(ngModel)]="nouvelleEquipe.nomEquipe" required>
+      </div>
+      <div>
+        <label for="numTel">Phone number</label>
+        <input type="text" id="numTel" name="numTel" [(ngModel)]="nouvelleEquipe.numTel">
+      </div>
+      <div>
+        <label for="nbEquipe">Number of teams</label>
+        <input type="number" id="nbEquipe" name="nbEquipe" [(ngModel)]="nouvelleEquipe.nbEquipe">
+      </div>
+      <div>
+        <label for="zone_dispo">Area available</label>
+        <input type="text" id="zone_dispo" name="zone_dispo" [(ngModel)]="nouvelleEquipe.zone_dispo">
+      </div>
+      <div>
+        <label for="dateDebut">Start date</label>
+        <input type="date" name="dateDebut" [(ngModel)]="nouvelleEquipe.dateDebut">
+
+      </div>
+      <div>
+        <label for="dateFin">End date</label>
+        <input type="date" name="dateFin" [(ngModel)]="nouvelleEquipe.dateFin">
+       <div *ngIf="nouvelleEquipe.dateFin && nouvelleEquipe.dateDebut && nouvelleEquipe.dateFin < nouvelleEquipe.dateDebut" class="error-message">The end date cannot be earlier than the start date!</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <textarea id="email" name="email" [(ngModel)]="nouvelleEquipe.email" placeholder="example@gmail.com" class="form-control"></textarea>
+        <div *ngIf="!isValidEmail(nouvelleEquipe.email)" class="error-message">Please enter a valid email address.</div>
+      </div>
+      
+      
+      <div>
+        <label for="sepcialite">Speciality</label>
+        <input type="text" id="sepcialite" name="sepcialite" [(ngModel)]="nouvelleEquipe.sepcialite">
+      </div>
+      <button type="submit"  class="btn btn-primary">Add</button>
+      
+      <button class="btn btn-primary" (click)="annuler()">Cancel</button>
+  
+    </form>
+  </div>
+  
+  
+  </div>
+<!-- Formulaire de modification -->
+<form *ngIf="afficherModifierFormulaire">
+  <h2>Modify Team</h2>
+  <div class="form-group">
+    <label for="nomEquipe">Name Team</label>
+    <input type="text" class="form-control" id="nomEquipe" name="nomEquipe" [(ngModel)]="equipeSelectionnee.nomEquipe">
+  </div>
+  <div class="form-group">
+    <label for="numTel">Phone number</label>
+    <input type="text" class="form-control" id="numTel" name="numTel" [(ngModel)]="equipeSelectionnee.numTel">
+  </div>
+  <div class="form-group">
+    <label for="nbEquipe">Number of members in the team</label>
+    <input type="number" class="form-control" id="nbEquipe" name="nbEquipe" [(ngModel)]="equipeSelectionnee.nbEquipe">
+  </div>
+  <div class="form-group">
+    <label for="zone_dispo">Area available</label>
+    <input type="text" class="form-control" id="zone_dispo" name="zone_dispo" [(ngModel)]="equipeSelectionnee.zone_dispo">
+  </div>
+  <div class="form-group">
+    <label for="dateDebut">Start date</label>
+    <input type="Date" class="form-control" id="dateDebut" name="dateDebut" [value]="equipeSelectionnee.dateDebut | date:'yyyy-MM-dd'" (input)="equipeSelectionnee.dateDebut=parseDate($event.target.value)">
+  </div>
+  
+  <div class="form-group">
+    <label for="dateFin">End date</label>
+    <input type="Date" class="form-control" id="dateFin" name="dateFin" [value]="equipeSelectionnee.dateFin | date:'yyyy-MM-dd'" (input)="equipeSelectionnee.dateFin=parseDate($event.target.value)">
+    <div *ngIf="equipeSelectionnee.dateFin && equipeSelectionnee.dateDebut && equipeSelectionnee.dateFin < equipeSelectionnee.dateDebut" class="error-message">The end date cannot be earlier than the start date!</div>
+  </div>
+   
+  <div class="form-group">
+    <label for="email">Email</label>
+    <textarea id="email" name="email" [(ngModel)]="equipeSelectionnee.email" placeholder="example@gmail.com" class="form-control"></textarea>
+    <div *ngIf="!isValidEmail(equipeSelectionnee.email)" class="error-message">Please enter a valid email address.</div>
+  </div>
+  
+  <div class="form-group">
+    <label for="sepcialite">Speciality</label>
+    <input type="text" class="form-control" id="sepcialite" name="sepcialite" [(ngModel)]="equipeSelectionnee.sepcialite">
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="modifierEquipe(); fermerFormulaire()">Modify</button>
+  <button type="button" class="btn btn-primary" (click)=" annulermodifier()">Cancel</button>
+</form>
+
+
