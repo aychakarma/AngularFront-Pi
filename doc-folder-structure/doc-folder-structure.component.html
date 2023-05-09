@@ -1,0 +1,72 @@
+<div class='wrapper'>
+  <div class='carousel'>
+    <div class='carousel__item'>
+      <div class='carousel__item-head'>
+        🐳
+      </div>
+      <div class='carousel__item-body'>
+        <p class='title'>Grow Green</p>
+        <p>Live like a queen</p>
+      </div>
+    </div>
+    <!-- Add a new div to display the quotes -->
+    <div class='carousel__item'>
+      <div class='carousel__item-head'>
+        💬
+      </div>
+      <div class='carousel__item-body'>
+        <p class='title'>Quotes</p>
+        <!-- Use ngFor to loop through the array of tips -->
+        <div *ngFor="let tip of tips">{{ tip }}</div>
+        <p>The right mindset the best Rest </p>
+
+      </div>
+    </div>
+    <div class='carousel__item'>
+      <div class='carousel__item-head'>
+        🐋
+      </div>
+      <div class='carousel__item-body'>
+        <p class='title'>It is never too late</p>
+        <p>To change the world</p>
+      </div>
+    </div>
+    <!-- Rest of the code remains the same -->
+  </div>
+</div>
+
+
+
+<div id="fabrizio"></div>
+<a href="http://fabrizio.co">fabrizio.co</a>
+<div class="container">
+
+  <div class="sunny"></div>
+  <div class="cloudy"></div>
+  <div class="rainy"></div>
+  <div class="snowy"></div>
+  <div class="rainbow"></div>
+  <div class="starry"></div>
+  <div class="stormy"></div><br><br> <br> <br>
+
+  <div class="weather-wrapper">
+    <div class="weather-card madrid">
+      <div class="weather-icon sun"></div>
+      <h1>{{weatherInfo.temperature}}º</h1>
+      <p>Humidity: {{weatherInfo.humidity}}</p>
+
+
+    </div>
+
+      <div class="weather-card london">
+        <div class="weather-icon cloud"></div>
+        <h1>PoF: {{weatherInfo.rainProbability}}%</h1>
+        <p>P°: {{weatherInfo.pressure}}</p>
+
+      </div>
+
+  </div>
+</div>
+
+<br> <br>
+

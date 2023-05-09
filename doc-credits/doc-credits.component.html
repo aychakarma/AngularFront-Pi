@@ -1,0 +1,285 @@
+<div>
+  <h5 class="mb-3 font-medium">Owners</h5>
+  <div class="table-inside">
+    <table class="order-table table-auto ltMd:responsive">
+      <thead>
+      <tr class="border text-left">
+
+        <th>
+          <span class="text-gray-800">Location</span>
+        </th>
+        <th>
+          <span class="text-gray-800">Surface </span>
+        </th>
+        <th>
+          <span class="text-gray-800">Harvest season </span>
+        </th>
+
+        <th>
+          <span class="text-gray-800">Date of acquisition</span>
+        </th>
+
+        <th>
+          <span class="text-gray-800">Type Sol</span>
+        </th>
+        <th class="text-right">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let terrain of terrains; let i = index" class="border" (click)="x = terrain">
+        <td>
+          <span>{{terrain?.location}}</span>
+        </td>
+        <td>
+          <span>{{terrain?.surface}}</span>
+        </td>
+        <td>
+          <span>{{terrain?.saisonRecolte}}</span>
+        </td>
+        <td>
+          <span>{{terrain?.dateObtentionTerrin | date:'yyyy-MM-dd'}}</span>
+        </td>
+        <td>
+          <span *ngIf="terrain.typeSol && terrain.typeSol.nomSol !== ''">{{ terrain.typeSol.nomSol }}</span>
+        </td>
+        <td class="text-right">
+          <button class="action_icon__btn" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button><br>
+          <mat-menu #menu="matMenu" xposition="before">
+            <button mat-menu-item (click)="toggleLandOverview(i)">
+              <mat-icon>dialpad</mat-icon>
+              <span>Details</span>
+            </button><br>
+            <button mat-menu-item (click)="deleteTerrin(terrain.idTerrin)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button><br>
+            <button mat-menu-item (click)="showForm = true">
+              <mat-icon>add</mat-icon>
+              <span>Add</span>
+            </button><br>
+            <button mat-menu-item (click)="showForm2 = true">
+              <mat-icon>update</mat-icon>
+              <span>Update</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+    <br><br>
+    <br> <br> <br>
+    <section class="light" *ngIf="showLandOverview">
+      <div class="container py-2">
+        <div class="h1 text-center text-dark" id="pageHeaderTitle">Land's overview</div>
+
+        <article class="postcard light yellow">
+          <img class="postcard__img" src="https://picsum.photos/501/501" alt="Image Title" />
+          <div class="postcard__text t-dark">
+
+            <h1 class="postcard__title yellow" *ngIf="showLandOverview">land located at : <p> {{selectedTerrin?.location}}</p>
+            </h1>
+            <div class="postcard__subtitle small"> Aquisition :
+              <time datetime="">{{selectedTerrin?.dateObtentionTerrin}}
+                <i class="fas fa-calendar-alt mr-2"></i>
+              </time>
+            </div>
+            <div class="postcard__bar"></div>
+            <div *ngIf="selectedTerrin">
+              <h2>Details</h2>
+              <p><strong>Description:</strong> {{selectedTerrin?.description}}</p>
+            </div><br>
+
+            <button (click)="getQuantiteEauAdequate(selectedTerrin?.idTerrin); EauAdequat = true">Amount needed
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" style="margin-right: 5px;">
+                <path fill="#fff" d="M256 448c-58.5 0-115.5-28.9-151-64.5-35.5-35.5-64.5-92.5-64.5-151s28.9-115.5 64.5-151C140.5 28.9 197.5 0 256 0s115.5 28.9 151 64.5c35.5 35.5 64.5 92.5 64.5 151s-28.9 115.5-64.5 151c-35.5 35.6-92.5 64.5-151 64.5zm0-400c-58.5 0-106 47.5-106 106s47.5 106 106 106 106-47.5 106-106-47.5-106-106-106z"/>
+              </svg>
+            </button>
+            <div class="modal" tabindex="-1" role="dialog" *ngIf="EauAdequat" >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" color=" #2c4b08"> Guess watering Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="EauAdequat = false">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <p> helloooooooooooo , {{advice}} , for , {{quantity}}
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="small">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="showGuessSoilForm = false">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </article>
+
+      </div>
+    </section>
+    <br> <br> <br>
+
+    <div class="container" *ngIf="showForm">
+      <form #myForm="ngForm" (ngSubmit)="addTerrain(myForm)">
+        <div class="row"><br>
+          <h4>Add your land</h4><br>
+          <div class="input-group input-group-icon">
+            <input type="text" placeholder="Location" [(ngModel)]="newTerrain.location" name="location"  required/>
+            <div class="input-icon"><i class="fa fa-user"></i></div>
+          </div>
+          <div class="input-group input-group-icon">
+            <input type="number" placeholder="surface" [(ngModel)]="newTerrain.surface" name="surface"  required/>
+            <div class="input-icon"><i class="fa fa-envelope"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-half">
+            <h4>Date of acquisition</h4><br>
+            <div class="form-group">
+              <input type="date" class="form-control" id="dateValidite" [(ngModel)]="newTerrain.dateObtentionTerrin"  name="dateObtentionTerrin" required>
+              <p>{{newTerrain.dateObtentionTerrin |date }} </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <h4>Harvest Season</h4><br>
+          <div class="form-group">
+            <select id="saisonRecolte" name="saisonRecolte" class="form-control"  ngModel required (change)="onSelectedSaisonChange($event)" >
+              <option value="" disabled selected>select harvest season</option>
+              <option *ngFor="let saison of saisonsRecoltes" [value]="saison" required>{{saison}}</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <h4>Description</h4><br>
+            <div class="input-group input-group-icon">
+              <input type="text" placeholder="additional description" [(ngModel)]="newTerrain.description" name="description"/>
+            </div>
+          </div>
+          <div class="row">
+            <h4 class="title">Do you know your Soil Type?</h4><br>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="knowSoilType" id="knowSoilType" [(ngModel)]="knowSoilType">
+              <label class="form-check-label" for="knowSoilType">
+                Yes
+              </label>
+            </div>
+          </div>
+
+          <div class="row guess-soil" *ngIf="!knowSoilType">
+            <button type="button" class="btn btn-primary" (click)="showGuessSoilForm = true">Guess it ! </button>
+          </div>
+
+          <div class="row soil-options" *ngIf="knowSoilType || showGuessSoilForm">
+            <div class="form-group">
+              <select id="typeSol" name="typeSol" class="form-control"  ngModel required (change)="onSelectedSolChange($event)">
+                <option value="" disabled selected>Select soil type</option>
+                <option *ngFor="let typeSol of typesSol" [value]="typeSol.idSol" required>{{typeSol.nomSol}}</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="guessedTypeSol!=undefined">
+            {{guessedTypeSol.nomSol}}
+
+          </div>
+          <br>           <div class="col-half text-left">
+          <div class="input-group input-group-icon">
+            <button type="submit" class="small">Submit</button>
+          </div>
+        </div> </div></form>
+      <form #guessForm="ngForm" (ngSubmit)=guessSol(guessForm)>
+          <div class="modal" tabindex="-1" role="dialog" *ngIf="showGuessSoilForm">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" color=" #2c4b08"> Guess Soil Type</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showGuessSoilForm = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <select id="couleurSol" name="couleurSol" class="form-control"  ngModel required (change)="onSelectedColorChange($event)" >
+                      <option value="" disabled selected>select soil color</option>
+                      <option *ngFor="let colorsol of couleursols" [value]="colorsol" required>{{colorsol}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <select id="textureSol" name="textureSol" class="form-control"  ngModel required (change)="onSelectedTextureChange($event)" >
+                      <option value="" disabled selected>select soil texture</option>
+                      <option *ngFor="let textureSol of texturesSol" [value]="textureSol" required >{{textureSol}}</option>
+                    </select>
+                  </div> <!-- Add your guess Soil Type form here -->
+                </div>
+                <div class="hydratation-section">
+                  <h4>Enter Your Soil Hydration Values</h4>
+                  <div class="hydratation-inputs">
+                    <div class="form-group"  >
+                      <label for="currentHydratations"> Hydration:</label>
+                      <input type="number" id="currentHydratations" name="currentHydratation"
+                             class="form-control" min="0" max="100" ngModel placeholder="Enter max hydration value"
+                             [(ngModel)]="currentHydratation">
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="small">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="showGuessSoilForm = false">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
+<br> <br>
+
+<div class="form-container" *ngIf="showForm2">
+  <form  (submit)="updateTerrain()">
+    <h2>Update your land</h2>
+    <div class="form-group">
+      <label>Location:</label>
+      <input type="text" placeholder="Location" [(ngModel)]="x.location" name="location"  required/>
+    </div>
+    <div class="form-group">
+      <label >Surface:</label>
+      <input type="number" placeholder="surface" [(ngModel)]="x.surface" name="surface"  required/>
+    </div>
+    <div class="form-group">
+
+      <label for="dateValidite">Aquisition Date</label>
+      <input type="Date" class="form-control" id="dateObtentionTerrin" name="dateObtentionTerrin"  [value]="x.dateObtentionTerrin | date:'yyyy-MM-dd'" (input)="x.dateObtentionTerrin=parseDate($event.target.value)">
+    </div>
+
+    <div class="form-group">
+      <label >Harvest Season :</label>
+
+      <select id="saisonRecolte2" name="saisonRecolte" class="form-control" [(ngModel)]="x.saisonRecolte" required>
+        <option value="" disabled selected>Harvest season </option>
+        <option *ngFor="let saison of saisonsRecoltes" [value]="saison">{{saison}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Description:</label>
+      <input type="text" placeholder="additional description" [(ngModel)]="x.description" name="description"/>
+    </div>
+    <button type="submit" class="update-button">Update your land </button>
+  </form>
+</div>
